@@ -1,16 +1,51 @@
 # Bind-Time Authority Proof
 
-Minimal invariant proof surface for bind-time authority revalidation under mid-state mutation.
+Executable demonstration of bind-time authority enforcement under mid-state mutation.
 
-This repository formalizes a single invariant:
+## Core Principle
 
-> Consequence binds if and only if admissibility survives the current state manifold at commit.
+Operational continuity is not proof of standing.
+Authority must be re-evaluated at commit-time against current state invariants.
 
-Focus areas:
-- Bind-time authority revalidation
-- Mid-state mutation detection
-- Deterministic replay integrity
-- Discrete collapse of consequence permission
+Consequence permission collapses discretely at the bind boundary.
+Drift is continuous. Binding is not.
 
-This is not a workflow model.
-This is a commit-boundary invariant test.
+## Failure Class
+
+Stable operation under decayed legitimating basis.
+
+Advanced systems can remain:
+- coherent
+- deterministic
+- authenticated
+- operationally successful
+
+while the legitimating basis for continuation has decayed beneath the runtime surface.
+
+## Invariants
+
+I1 — Bind-Time Authority Collapse  
+If authority epoch at commit differs from authorization epoch, consequence binding must refuse.
+
+I2 — Deterministic Replay  
+Given identical state, authority, manifold definition, and history, decision outcomes must be identical.
+
+I3 — No Resurrection Without Reissue  
+Authority cannot be restored implicitly by geometric recovery. Standing requires explicit epoch increment.
+
+I4 — Fork Detectability  
+Commit chain mutation must be detectable.
+
+## Proof Surfaces
+
+- Manifold constraint F(x)=0
+- Capacity field Φ
+- Authority epoch semantics
+- Gradient projection to nearest admissible surface
+- Deterministic commit-chain hashing
+- Adversarial drift injection
+- Stress-run invariant validation
+
+---
+
+Deterministic. Replayable. Fail-closed.
