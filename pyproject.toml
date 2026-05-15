@@ -3,23 +3,13 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-<<<<<<< HEAD
-name = "bind_time_authority_fabric"
-version = "1.0.0"
-description = "Deterministic bind-time authority enforcement fabric"
-authors = [{name="Samantha Revita"}]
-readme = "README.md"
-requires-python = ">=3.10"
-license = {text = "Apache-2.0"}
-
-[tool.setuptools.packages.find]
-where = ["."]
-=======
 name = "bind-time-authority-fabric"
 version = "1.0.1"
 description = "Deterministic bind-time authority enforcement fabric"
-authors = [{ name="Samantha Revita" }]
+authors = [{ name = "Samantha Revita" }]
+readme = "README.md"
 requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
 dependencies = [
     "pynacl"
 ]
@@ -27,4 +17,3 @@ dependencies = [
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["bind_time_authority_fabric*"]
->>>>>>> 5fde032 (Normalize package structure under bind_time_authority_fabric)
