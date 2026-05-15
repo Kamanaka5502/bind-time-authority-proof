@@ -1,0 +1,42 @@
+<svg width="1600" height="400" viewBox="0 0 1600 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#050510"/>
+      <stop offset="50%" stop-color="#0a0f1f"/>
+      <stop offset="100%" stop-color="#050510"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00ffe0"/>
+      <stop offset="50%" stop-color="#7d5fff"/>
+      <stop offset="100%" stop-color="#ff00aa"/>
+    </linearGradient>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="400" fill="url(#bg)"/>
+
+  <!-- Interference Grid -->
+  <g stroke="url(#glow)" stroke-width="1" opacity="0.25">
+    <path d="M0 200 Q400 50 800 200 T1600 200" fill="none"/>
+    <path d="M0 220 Q400 370 800 220 T1600 220" fill="none"/>
+    <path d="M0 180 Q400 330 800 180 T1600 180" fill="none"/>
+  </g>
+
+  <!-- Boundary Line -->
+  <line x1="0" y1="200" x2="1600" y2="200" stroke="url(#glow)" stroke-width="3" filter="url(#softGlow)"/>
+
+  <!-- Title -->
+  <text x="50%" y="170" text-anchor="middle" font-size="48" fill="#ffffff" font-family="monospace" letter-spacing="4">
+    BIND-TIME AUTHORITY FABRIC
+  </text>
+
+  <text x="50%" y="235" text-anchor="middle" font-size="20" fill="#00ffe0" font-family="monospace" letter-spacing="2">
+    Deterministic • Cryptographically Sealed • Fail-Closed
+  </text>
+</svg>
