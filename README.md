@@ -6,6 +6,7 @@
   <img src="https://img.shields.io/badge/Execution-Bind--Time%20Enforced-00ffcc?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Cryptography-Ed25519-7d5fff?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Ledger-Merkle%20Sealed-ff00aa?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Corridors-Isolated-00aaff?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Boot-Fail--Closed-ff3b3b?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Replay-Deterministic-00ff88?style=for-the-badge" />
 </p>
@@ -24,6 +25,22 @@ Standing must be proven at the moment consequence would bind.
 Drift is continuous.
 Binding is discrete.
 Authority collapses at commit.
+
+---
+
+## Visual Surfaces
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Kamanaka5502/bind-time-authority-proof/main/assets/merkle-lattice.svg" width="80%" />
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Kamanaka5502/bind-time-authority-proof/main/assets/corridor-isolation.svg" width="80%" />
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Kamanaka5502/bind-time-authority-proof/main/assets/key-lineage.svg" width="80%" />
+</p>
 
 ---
 
@@ -56,18 +73,6 @@ Ledger mutation is provably detectable.
 
 ---
 
-## Execution Surfaces
-
-- Manifold constraint enforcement
-- Capacity viability metric
-- Epoch-bound authority semantics
-- Commit-bound cryptographic attestation
-- Merkle-root emission per step
-- Corridor namespace isolation
-- Replay verification engine
-
----
-
 ## Security Posture
 
 Fail-closed by default.
@@ -78,5 +83,6 @@ execution does not proceed.
 ---
 
 <p align="center">
+  <img src="https://img.shields.io/badge/Integrity-Commit--Sealed-00ffe0?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Status-Hardened%20Boundary%20Fabric-00ffcc?style=for-the-badge" />
 </p>
