@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Kamanaka5502/bind-time-authority-proof/main/assets/holographic-boundary-banner.svg" width="100%" />
+  <img src="assets/holographic-boundary-banner.svg" width="100%" />
 </p>
 
 <p align="center">
@@ -31,15 +31,15 @@ Authority collapses at commit.
 ## Visual Surfaces
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Kamanaka5502/bind-time-authority-proof/main/assets/merkle-lattice.svg" width="80%" />
+  <img src="assets/merkle-lattice.svg" width="80%" />
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Kamanaka5502/bind-time-authority-proof/main/assets/corridor-isolation.svg" width="80%" />
+  <img src="assets/corridor-isolation.svg" width="80%" />
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Kamanaka5502/bind-time-authority-proof/main/assets/key-lineage.svg" width="80%" />
+  <img src="assets/key-lineage.svg" width="80%" />
 </p>
 
 ---
