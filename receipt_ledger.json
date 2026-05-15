@@ -1,0 +1,16 @@
+[
+  {
+    "receipt_index": 1,
+    "parent_tip": null,
+    "chain_tip": "48a40bb761258b04",
+    "chain_tip_full": "48a40bb761258b046a4b630fecc2f23c3c1b7239160181c34bcd15c3349a55c5",
+    "corridor": "clinical_signoff",
+    "decision": "EXECUTE",
+    "authority_valid": true,
+    "phi": 0.0,
+    "admissibility_distance": 0,
+    "latency_ms": 0.132,
+    "issued_at": 1778869690,
+    "receipt_hash": "2353bba5e5c16118ce2d3a1b4895235705e32e8d7188826d583ebbb408868fc2"
+  }
+]
