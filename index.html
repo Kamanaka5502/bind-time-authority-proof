@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bind-Time Authority Proof · Public Sandbox</title>
+  <meta name="description" content="Public-safe interactive demonstrator for bind-time authority, refusal, reissue, replay, and mutation detection." />
+  <style>
+    :root{
+      --bg:#06090f; --panel:#0d1320; --panel2:#101a2a; --text:#eaf6ff; --muted:#8ea4b8;
+      --cyan:#61f4ff; --blue:#6ea8ff; --green:#7dffb2; --amber:#ffd26e; --red:#ff7c8d; --line:#22324a;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(circle at 20% 0%,#12223a 0,#08101d 24%,var(--bg) 55%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100vh}
+    a{color:var(--cyan)}
+    .wrap{max-width:1180px;margin:0 auto;padding:28px 18px 60px}
+    .eyebrow{letter-spacing:.18em;text-transform:uppercase;font-size:.72rem;color:var(--cyan);font-weight:700}
+    h1{font-size:clamp(2rem,5vw,4.6rem);line-height:.98;margin:.4rem 0 1rem;max-width:950px}
+    .lead{font-size:1.05rem;line-height:1.65;color:#bad0e2;max-width:920px}
+    .boundary{margin:22px 0;padding:14px 16px;border:1px solid #325070;background:rgba(8,21,37,.75);border-radius:12px;color:#b8d5ea}
+    .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-top:24px}
+    @media(max-width:850px){.grid{grid-template-columns:1fr}}
+    .card{background:linear-gradient(180deg,rgba(17,28,45,.96),rgba(10,16,27,.96));border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 14px 40px rgba(0,0,0,.28)}
+    .card h2{font-size:1rem;margin:0 0 15px;color:#d8ecfb;letter-spacing:.04em;text-transform:uppercase}
+    .state-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .state{padding:12px;border:1px solid var(--line);border-radius:12px;background:#0a111d}
+    .state small{display:block;color:var(--muted);margin-bottom:5px}
+    .value{font-weight:800;font-size:1.05rem}
+    .ok{color:var(--green)} .warn{color:var(--amber)} .bad{color:var(--red)} .info{color:var(--cyan)}
+    .controls{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}
+    button{appearance:none;border:1px solid #31506d;background:#122238;color:var(--text);padding:10px 13px;border-radius:10px;font-weight:700;cursor:pointer}
+    button:hover{border-color:var(--cyan);transform:translateY(-1px)}
+    button.primary{background:linear-gradient(135deg,#164a64,#17385e);border-color:#3dd9e6}
+    button.danger{background:#321722;border-color:#713043}
+    .decision{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px;border-radius:14px;border:1px solid var(--line);background:#09111c;margin-bottom:12px}
+    .decision .label{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}
+    #decision{font-size:1.65rem;font-weight:900;letter-spacing:.06em}
+    #reason{color:#b8cada;line-height:1.55}
+    .timeline{margin-top:10px;max-height:340px;overflow:auto;padding-right:4px}
+    .evt{display:grid;grid-template-columns:86px 1fr;gap:10px;padding:9px 0;border-bottom:1px solid #17253a;font-size:.9rem}
+    .evt .t{color:#698199;font-variant-numeric:tabular-nums}
+    .evt strong{color:#dff5ff}
+    .invariants{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:18px}
+    @media(max-width:680px){.invariants,.state-grid{grid-template-columns:1fr}}
+    .inv{border-left:3px solid #325978;padding:10px 12px;background:#0b1422;border-radius:8px;color:#b9cede}
+    .inv b{display:block;color:#e7f7ff;margin-bottom:4px}
+    footer{margin-top:28px;color:#71879a;font-size:.84rem;line-height:1.6}
+    code{color:#9beeff;background:#0a1421;border:1px solid #1c3148;border-radius:6px;padding:2px 5px}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="eyebrow">Elyria Systems · Public Proof Surface</div>
+    <h1>Authority is checked where consequence binds.</h1>
+    <p class="lead">This browser demonstrator exposes one bounded principle: permission at request time is not enough. Standing must still be valid at the exact boundary where an action would become consequential. If standing is stale, revoked, mismatched, or the public proof chain has been mutated, the result fails closed.</p>
+
+    <div class="boundary"><strong>Disclosure boundary:</strong> this is a public-safe demonstrator only. It does not expose the production authority evaluator, production key-management architecture, private signing infrastructure, private standing-token format, private corridor implementation, protected runtime law, customer policy, or commercial deployment architecture.</div>
+
+    <section class="grid">
+      <div class="card">
+        <h2>Execution field</h2>
+        <div class="state-grid">
+          <div class="state"><small>Request authority</small><div id="requestAuthority" class="value ok">VALID</div></div>
+          <div class="state"><small>Current authority</small><div id="currentAuthority" class="value ok">VALID</div></div>
+          <div class="state"><small>Request epoch</small><div id="requestEpoch" class="value info">EPOCH-001</div></div>
+          <div class="state"><small>Bind epoch</small><div id="bindEpoch" class="value info">EPOCH-001</div></div>
+          <div class="state"><small>Proof chain</small><div id="chainState" class="value ok">INTACT</div></div>
+          <div class="state"><small>Consequence</small><div class="value">EXTERNAL EFFECT</div></div>
+        </div>
+        <div class="controls">
+          <button class="primary" onclick="attemptBind()">Attempt bind</button>
+          <button class="danger" onclick="revokeAuthority()">Revoke authority</button>
+          <button onclick="advanceEpoch()">Advance epoch</button>
+          <button onclick="reissueAuthority()">Reissue authority</button>
+          <button class="danger" onclick="mutateChain()">Mutate proof chain</button>
+          <button onclick="replay()">Replay same state</button>
+          <button onclick="resetDemo()">Reset</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Bind-time decision</h2>
+        <div class="decision">
+          <div><div class="label">Decision posture</div><div id="decision" class="info">NOT EVALUATED</div></div>
+          <div id="seal" class="value info">○</div>
+        </div>
+        <div id="reason">No consequence has been admitted. Attempt bind to evaluate standing at the consequence boundary.</div>
+        <div class="timeline" id="timeline"></div>
+      </div>
+    </section>
+
+    <section class="card" style="margin-top:18px">
+      <h2>Public invariants</h2>
+      <div class="invariants">
+        <div class="inv"><b>I1 — Bind-Time Authority Check</b>Authority mismatch at commit forces <code>REFUSE</code>.</div>
+        <div class="inv"><b>I2 — Deterministic Replay</b>Identical public demo state produces identical decision posture.</div>
+        <div class="inv"><b>I3 — No Resurrection Without Reissue</b>Revoked authority does not recover merely because time or state advances.</div>
+        <div class="inv"><b>I4 — Mutation Detectability</b>Unexpected proof-chain mutation is detectable and blocks admission.</div>
+      </div>
+    </section>
+
+    <footer>
+      <strong>Bind-Time Authority Proof</strong> · bounded public demonstrator. Runnable behavior here is illustrative and must not be interpreted as production cryptography, production key lineage, a production ledger, or the complete protected authority-control implementation.<br/>
+      Repository: <a href="https://github.com/Kamanaka5502/bind-time-authority-proof">github.com/Kamanaka5502/bind-time-authority-proof</a>
+    </footer>
+  </main>
+
+<script>
+const initial = () => ({
+  requestAuthority:'VALID', currentAuthority:'VALID', requestEpoch:1, bindEpoch:1,
+  chain:'INTACT', decision:'NOT EVALUATED', reason:'No consequence has been admitted.', lastFingerprint:null
+});
+let s = initial();
+
+function epoch(n){ return 'EPOCH-' + String(n).padStart(3,'0'); }
+function fingerprint(){ return [s.requestAuthority,s.currentAuthority,s.requestEpoch,s.bindEpoch,s.chain].join('|'); }
+function log(msg){
+  const box=document.getElementById('timeline');
+  const row=document.createElement('div'); row.className='evt';
+  const now=new Date().toLocaleTimeString();
+  row.innerHTML=`<div class="t">${now}</div><div>${msg}</div>`;
+  box.prepend(row);
+}
+function paint(){
+  document.getElementById('requestAuthority').textContent=s.requestAuthority;
+  document.getElementById('currentAuthority').textContent=s.currentAuthority;
+  document.getElementById('requestEpoch').textContent=epoch(s.requestEpoch);
+  document.getElementById('bindEpoch').textContent=epoch(s.bindEpoch);
+  document.getElementById('chainState').textContent=s.chain;
+  document.getElementById('decision').textContent=s.decision;
+  document.getElementById('reason').textContent=s.reason;
+  const set=(id, cls)=>{ document.getElementById(id).className='value '+cls; };
+  set('requestAuthority',s.requestAuthority==='VALID'?'ok':'bad');
+  set('currentAuthority',s.currentAuthority==='VALID'?'ok':'bad');
+  set('chainState',s.chain==='INTACT'?'ok':'bad');
+  const d=document.getElementById('decision');
+  d.className=s.decision==='MAY_BIND'?'ok':s.decision==='REFUSE'?'bad':'info';
+  const seal=document.getElementById('seal'); seal.textContent=s.decision==='MAY_BIND'?'✓':s.decision==='REFUSE'?'×':'○';
+  seal.className='value '+(s.decision==='MAY_BIND'?'ok':s.decision==='REFUSE'?'bad':'info');
+}
+function evaluate(){
+  if(s.chain!=='INTACT') return ['REFUSE','Proof-chain mutation detected. Standing cannot be proven at bind time.'];
+  if(s.requestAuthority!=='VALID') return ['REFUSE','The originating request never possessed valid authority.'];
+  if(s.currentAuthority!=='VALID') return ['REFUSE','Authority was revoked before consequence could bind.'];
+  if(s.requestEpoch!==s.bindEpoch) return ['REFUSE','Request-time authority is stale at bind time. Reissue is required in the current epoch.'];
+  return ['MAY_BIND','Authority, epoch, and public proof-chain posture remain coherent at the consequence boundary.'];
+}
+function attemptBind(){
+  const [d,r]=evaluate(); s.decision=d; s.reason=r; s.lastFingerprint=fingerprint()+'=>'+d;
+  log(`<strong>${d}</strong> — ${r}`); paint();
+}
+function revokeAuthority(){ s.currentAuthority='REVOKED'; s.decision='NOT EVALUATED'; s.reason='Authority changed after request. Bind-time standing must be re-evaluated.'; log('<strong>AUTHORITY REVOKED</strong> after request issuance.'); paint(); }
+function advanceEpoch(){ s.bindEpoch++; s.decision='NOT EVALUATED'; s.reason='Material standing changed across epochs. Prior permission cannot be assumed current.'; log(`<strong>EPOCH ADVANCED</strong> to ${epoch(s.bindEpoch)}.`); paint(); }
+function reissueAuthority(){ s.currentAuthority='VALID'; s.requestAuthority='VALID'; s.requestEpoch=s.bindEpoch; s.decision='NOT EVALUATED'; s.reason='Authority explicitly reissued in the current epoch. Bind may now be evaluated again.'; log(`<strong>AUTHORITY REISSUED</strong> for ${epoch(s.bindEpoch)}.`); paint(); }
+function mutateChain(){ s.chain='MUTATED'; s.decision='NOT EVALUATED'; s.reason='Proof-chain integrity changed. Consequence must fail closed until integrity is restored.'; log('<strong>MUTATION DETECTED</strong> in the public proof chain.'); paint(); }
+function replay(){
+  const [d,r]=evaluate(); const fp=fingerprint()+'=>'+d;
+  const same=s.lastFingerprint===fp;
+  s.decision=d; s.reason=(same?'Deterministic replay reproduced the same decision. ':'Replay evaluated current state. ')+r;
+  log(`<strong>REPLAY ${same?'MATCH':'RUN'}</strong> — ${d}.`); s.lastFingerprint=fp; paint();
+}
+function resetDemo(){ s=initial(); document.getElementById('timeline').innerHTML=''; log('<strong>RESET</strong> — clean public demonstration state loaded.'); paint(); }
+resetDemo();
+</script>
+</body>
+</html>
