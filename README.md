@@ -20,6 +20,12 @@ This repository demonstrates the public-safe principle that execution permission
 Standing must be evaluated at the moment consequence would bind.
 ```
 
+## Live Public Sandbox
+
+**[Open the Bind-Time Authority interactive sandbox](https://kamanaka5502.github.io/bind-time-authority-proof/)**
+
+The browser surface allows a reviewer to revoke authority, advance epochs, reissue standing, mutate the bounded public proof chain, attempt bind, and replay identical state to observe deterministic decision posture. It is a public-safe demonstrator only; the protected runtime remains undisclosed.
+
 ---
 
 ## Disclosure Boundary
