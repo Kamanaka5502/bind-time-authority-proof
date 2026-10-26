@@ -1,14 +1,11 @@
-from advanced_execution_field import simulate
-import hashlib
+from bind_time_authority_fabric import CommitChain
 
-history = simulate()
 
-last_tip = history[-1]["chain_tip"]
-
-tampered = hashlib.sha256(b"tamper").hexdigest()
-
-print("\n=== FORK TEST ===")
-if tampered == last_tip:
-    print("Fork undetected.")
-else:
-    print("Fork detectable. Integrity holds.")
+chain = CommitChain()
+chain.append("request")
+chain.append("decision")
+print("=== FORK TEST ===")
+assert chain.verify(), "Untampered chain should verify"
+chain.chain[1] = "0" * 64
+assert not chain.verify(), "Tampered chain should be rejected"
+print("Fork mutation detected. Integrity holds.")
