@@ -91,7 +91,7 @@ The public demonstrator may show:
 - bounded receipt or chain summaries
 - fail-closed behavior
 
-The public demonstrator must not be interpreted as production cryptography, production key lineage, production ledger design, or a complete authority-control implementation.
+**Cryptographic boundary:** the demo HMAC key is public and is not production key management. The SHA-256 helper in `zk_envelope.py` is a deterministic digest/checksum, not a zero-knowledge proof. Neither mechanism independently establishes production authority, signer identity, or protected key custody.
 
 ---
 
@@ -107,15 +107,27 @@ Identical public demo state produces identical decision posture.
 Authority cannot recover implicitly after revocation.
 
 **I4 — Mutation Detectability**  
-Unexpected chain mutation must be detectable in the demonstrator.
+Unexpected chain mutation must be detectable in the demonstrator. The Python chain verifier recomputes indexed hashes with predecessor binding and rejects detectable mutations.
+
+---
+
+## Regression Tests
+
+Run the standard-library test suite from the repository root:
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+The tests cover package import, token signature/payload tampering, and chain replacement, reordering, deletion, arbitrary append, and payload mutation.
+
+These are demonstrator regression tests, not a security certification or substitute for independent review.
 
 ---
 
 ## Security Posture
 
-Fail closed by default.
-
-If authority cannot be proven at the consequence boundary, execution does not proceed.
+The public demonstration refuses execution when authority is invalid or the token epoch is stale. Do not infer production fail-closed guarantees from the demo alone.
 
 ---
 
@@ -123,7 +135,7 @@ If authority cannot be proven at the consequence boundary, execution does not pr
 
 This repository is proprietary / restricted-use material.
 
-Viewing this repository does not grant permission to copy, reuse, reverse engineer, clone, derive from, commercialize, or deploy the architecture, runtime logic, authority model, receipt model, replay model, or execution-boundary system.
+Viewing this repository does not grant permission to copy, reuse, reverse engineer, clone, derive from, commercialize, or deploy the architecture, runtime logic, authority model, receipt model, replay model, execution-boundary system, or other protected material.
 
 Production review requires a separate written agreement.
 
