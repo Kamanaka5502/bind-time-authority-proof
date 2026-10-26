@@ -2,7 +2,7 @@ import sys
 import time
 import hashlib
 from advanced_execution_field import simulate
-from authority_signature import generate_keypair, sign_epoch, verify_signature
+from bind_time_authority_fabric.standing_token import StandingToken, verify
 
 LATENCY_CEILING_MS = 25
 
@@ -23,18 +23,14 @@ def merkle_root(chain):
 
 
 def fork_detect(chain):
-    # simplistic continuity enforcement
-    for i in range(1, len(chain)):
-        if not isinstance(chain[i], str):
-            return False
-    return True
+    # The returned chain entries must at least have the expected SHA-256 shape.
+    # Full predecessor/payload verification is exercised by CommitChain.verify().
+    return all(isinstance(item, str) and len(item) == 64 for item in chain)
 
 
 def crypto_self_test():
-    priv, pub = generate_keypair()
-    msg = "epoch-test"
-    sig = sign_epoch(priv, msg)
-    return verify_signature(pub, msg, sig)
+    token = StandingToken(1, "replay-scope", "replay-state").sign()
+    return verify(token)
 
 
 def run_replay_check():
